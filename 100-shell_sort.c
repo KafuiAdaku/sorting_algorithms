@@ -1,51 +1,34 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "sort.h"
 
 /**
- * arr_swap - swaps the position of two elements in an array
- * @a: pointer to the first element.
- * @b: pointer to the second element.
- * Return: Nothing.
- */
-void arr_swap(int *a, int *b)
-{
-	int temp;
-
-	temp = *a;
-	*a = *b;
-	*b = temp;
-
-}
-
-/**
- * shell_sort -  sorts an array of integers in ascending order using
- *		 the Shell sort algorithm, using the Knuth sequence
- * @array: pointer to the array to be sorted
- * @size: size of the array of type int.
- * Return: Nothing
+ * shell_sort - function sorts an array
+ * @array: array to be sorted
+ * @size: size of the array
+ *
+ * Return: void.
  */
 void shell_sort(int *array, size_t size)
 {
-	int gap, i, j;
+	size_t j, gap;
+	int i, print_signal;
 
-	gap = (int)size / 3;
+	gap = 1;
+	while (gap < size)
+		gap = 3 * gap + 1;
 
-	if (array == NULL || size < 2)
-		return;
-
-	for (; gap >= 1; gap /= 3)
+	for (gap = gap; gap >= 1; gap /= 3)
 	{
-		for (j = gap; j < (int)size; j++)
+		for (j = gap; j < size; j++)
 		{
 			for (i = j - gap; i >= 0; i -= gap)
 			{
-				if (array[i + gap] <= array[i])
-					arr_swap(&array[i + gap], &array[i]);
-				else
+				if (array[i + gap] > array[i])
 					break;
+				swap(array, i + gap, i);
+				print_signal = 1;
 			}
 		}
-		print_array((const int *)array, size);
+		if (print_signal == 1)
+			print_array(array, size);
 	}
 }
