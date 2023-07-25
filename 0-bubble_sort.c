@@ -32,6 +32,6 @@ void bubble_sort(int *array, size_t size)
 			}
 		}
 		if (signal == 0)
-			return;
+			break;
 	}
 }
